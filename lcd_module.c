@@ -8,6 +8,8 @@
 #define BIT_RW BIT1
 #define BIT_RS BIT0
 
+uint32_t cursorPosition = 0;
+
 void delay(long limite){
     volatile long cont=0;
     while (cont++ < limite) ;
@@ -39,7 +41,7 @@ void PCF_STT_STP(void){
     while (x<5){
         UCB1CTLW0 |= UCTR    |   //Mestre TX
                     UCTXSTT;    //Gerar START
-        while ( (UCB1IFG & UCTXIFG0) == 0);  //Esperar TXIFG=1
+        while ( ((UCB1IFG & UCTXIFG0) == 0) && ((UCB1IFG & UCNACKIFG) == 0));  //Esperar TXIFG=1
         UCB1CTLW0 |= UCTXSTP;                //Gerar STOP
         delay(200);
         if ( (UCB1CTLW0 & UCTXSTP) == 0)   break;   //Esperar STOP
@@ -121,6 +123,22 @@ void I2C_write_UCB1(char dado){
     delay(50);
 }
 
+uint8_t I2C_read_UCB1(){
+    uint8_t dado;
+    UCB1I2CSA = PCF_ADR;        //Endereço Escravo
+    UCB1CTLW0 &= ~UCTR;
+    UCB1CTLW0 |= UCTXSTT;        //Gerar START
+
+    while (((UCB1IFG & UCTXIFG0) == 0) && ((UCB1IFG & UCNACKIFG) == 0));   //Esperar STT=0
+    UCB1CTLW0 |= UCTXSTP;
+    while ((UCB1CTLW0 & UCTXSTP) == UCTXSTP)   ;   //Esperar STOP
+    while((UCB1IFG & UCRXIFG0) == 0);
+    dado = UCB1RXBUF;
+    UCB1IFG &= ~UCRXIFG0;
+    delay(50);
+    return dado;
+}
+
 void lcdBacklightON(void){
     I2C_write_UCB1(BIT3);
     delay(50);
@@ -149,4 +167,32 @@ void WriteString_B1(char *string){
     for(i = 0; i < size && i < 16; i++){
         WriteASCII_B1(string[i]);
     }
+}
+void LCD_clear(){
+
+    I2C_write_UCB1(0x08);
+    I2C_write_UCB1(0x0C);
+    I2C_write_UCB1(0x08);
+
+    I2C_write_UCB1(0x18);
+    I2C_write_UCB1(0x1C);
+    I2C_write_UCB1(0x18);
+}
+
+void LCD_changeCursorPosition(uint8_t row, uint8_t col){
+    if(row < 0 || row > 1 || col < 0 || col > 15){
+        return;
+    }
+
+    uint8_t position = row*16 + col;
+    if(row)
+        position += 48;
+
+    I2C_write_UCB1((position & 0xF0) | 0x88);
+    I2C_write_UCB1((position & 0xF0) | 0x8C);
+    I2C_write_UCB1((position & 0xF0) | 0x88);
+
+    I2C_write_UCB1(((position & 0x0F) << 4) | 0x08);
+    I2C_write_UCB1(((position & 0x0F) << 4) | 0x0C);
+    I2C_write_UCB1(((position & 0x0F) << 4) | 0x08);
 }

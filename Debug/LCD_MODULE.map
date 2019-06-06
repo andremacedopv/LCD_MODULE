@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker Unix v18.12.1                  
 ******************************************************************************
->> Linked Wed Jun  5 17:19:54 2019
+>> Linked Thu Jun  6 02:10:43 2019
 
 OUTPUT FILE NAME:   <LCD_MODULE.out>
 ENTRY POINT SYMBOL: "_c_int00_noinit_noargs_mpu"  address: 00004000
@@ -20,7 +20,7 @@ MEMORY CONFIGURATION
   RAM                   00001c00   00001000  000000a0  00000f60  RWIX
   LEARAM                00002c00   00000ec8  00000000  00000ec8  RWIX
   LEASTACK              00003ac8   00000138  00000000  00000138  RWIX
-  FRAM                  00004000   0000bf80  00000026  0000bf5a  RWIX
+  FRAM                  00004000   0000bf80  0000002e  0000bf52  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -80,7 +80,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00034000  00000382  00033c7e  RWIX
+  FRAM2                 00010000   00034000  0000045c  00033ba4  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -257,43 +257,45 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.c.obj (.reset)
 
-.const     0    00004020    00000006     
-                  00004020    00000006     main.obj (.const:.string)
+.const     0    00004020    0000000e     
+                  00004020    0000000e     main.obj (.const:.string)
 
-.text      0    00010000    00000382     
+.text      0    00010000    0000045c     
                   00010000    000000cc     lcd_module.obj (.text:LCD_inic)
-                  000100cc    00000056     lcd_module.obj (.text:WriteASCII_B1)
-                  00010122    00000052     lcd_module.obj (.text:I2C_write_UCB1)
-                  00010174    00000050     lcd_module.obj (.text:LCD_aux)
-                  000101c4    0000004c     lcd_module.obj (.text:I2CConfig_UCB1)
-                  00010210    00000048     lcd_module.obj (.text:delay)
-                  00010258    0000003e     lcd_module.obj (.text:PCF_STT_STP)
-                  00010296    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  000102c2    0000002c     main.obj (.text:main)
-                  000102ee    0000002c     rts430x_lc_rd_eabi.lib : div16s.asm.obj (.text)
-                  0001031a    00000028     lcd_module.obj (.text:WriteString_B1)
-                  00010342    00000016     rts430x_lc_rd_eabi.lib : div16u.asm.obj (.text)
-                  00010358    00000012     lcd_module.obj (.text:lcdBacklightON)
-                  0001036a    0000000e     rts430x_lc_rd_eabi.lib : strlen.c.obj (.text:strlen)
-                  00010378    00000006                            : exit.c.obj (.text:abort)
-                  0001037e    00000004                            : pre_init.c.obj (.text:_system_pre_init)
+                  000100cc    0000006c     lcd_module.obj (.text:LCD_changeCursorPosition)
+                  00010138    00000064     main.obj (.text:main)
+                  0001019c    00000056     lcd_module.obj (.text:WriteASCII_B1)
+                  000101f2    00000052     lcd_module.obj (.text:I2C_write_UCB1)
+                  00010244    00000050     lcd_module.obj (.text:LCD_aux)
+                  00010294    0000004c     lcd_module.obj (.text:I2CConfig_UCB1)
+                  000102e0    00000048     lcd_module.obj (.text:delay)
+                  00010328    00000046     lcd_module.obj (.text:PCF_STT_STP)
+                  0001036e    0000002e     lcd_module.obj (.text:LCD_clear)
+                  0001039c    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  000103c8    0000002c     rts430x_lc_rd_eabi.lib : div16s.asm.obj (.text)
+                  000103f4    00000028     lcd_module.obj (.text:WriteString_B1)
+                  0001041c    00000016     rts430x_lc_rd_eabi.lib : div16u.asm.obj (.text)
+                  00010432    00000012     lcd_module.obj (.text:lcdBacklightON)
+                  00010444    0000000e     rts430x_lc_rd_eabi.lib : strlen.c.obj (.text:strlen)
+                  00010452    00000006                            : exit.c.obj (.text:abort)
+                  00010458    00000004                            : pre_init.c.obj (.text:_system_pre_init)
 
 MODULE SUMMARY
 
        Module             code   ro data   rw data
        ------             ----   -------   -------
     ./
-       lcd_module.obj     720    0         0      
-       main.obj           44     6         0      
+       lcd_module.obj     882    0         0      
+       main.obj           100    14        0      
     +--+------------------+------+---------+---------+
-       Total:             764    6         0      
+       Total:             982    14        0      
                                                   
-    /home/andre/ti/ccs900/ccs/ccs_base/msp430/lib/FR59xx/MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib
+    /home/danilo/ti/ccs900/ccs/ccs_base/msp430/lib/FR59xx/MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib
        mpu_init.o         44     0         0      
     +--+------------------+------+---------+---------+
        Total:             44     0         0      
                                                   
-    /home/andre/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/lib/rts430x_lc_rd_eabi.lib
+    /home/danilo/ti/ccs900/ccs/tools/compiler/ti-cgt-msp430_18.12.1.LTS/lib/rts430x_lc_rd_eabi.lib
        div16s.asm.obj     44     0         0      
        boot.c.obj         24     2         0      
        div16u.asm.obj     22     0         0      
@@ -343,7 +345,7 @@ MODULE SUMMARY
                                                   
        Stack:             0      0         160    
     +--+------------------+------+---------+---------+
-       Grand Total:       930    82        160    
+       Grand Total:       1148   90        160    
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -611,7 +613,7 @@ address   name
 000004bc  BIN2BCD                   
 000004bd  BIN2BCD_H                 
 000004bc  BIN2BCD_L                 
-00010378  C$$EXIT                   
+00010452  C$$EXIT                   
 0000043e  CAPTIO0CTL                
 0000043f  CAPTIO0CTL_H              
 0000043e  CAPTIO0CTL_L              
@@ -801,9 +803,11 @@ address   name
 00000146  GCCTL1                    
 00000147  GCCTL1_H                  
 00000146  GCCTL1_L                  
-000101c4  I2CConfig_UCB1            
-00010122  I2C_write_UCB1            
-00010174  LCD_aux                   
+00010294  I2CConfig_UCB1            
+000101f2  I2C_write_UCB1            
+00010244  LCD_aux                   
+000100cc  LCD_changeCursorPosition  
+0001036e  LCD_clear                 
 00010000  LCD_inic                  
 00000a80  LEACAP                    
 00000a82  LEACAPH                   
@@ -1107,7 +1111,7 @@ address   name
 00000244  PCDIR                     
 00000245  PCDIR_H                   
 00000244  PCDIR_L                   
-00010258  PCF_STT_STP               
+00010328  PCF_STT_STP               
 0000025a  PCIE                      
 00000258  PCIES                     
 00000259  PCIES_H                   
@@ -1855,8 +1859,8 @@ address   name
 0000015c  WDTCTL                    
 0000015d  WDTCTL_H                  
 0000015c  WDTCTL_L                  
-000100cc  WriteASCII_B1             
-0001031a  WriteString_B1            
+0001019c  WriteASCII_B1             
+000103f4  WriteString_B1            
 00002c00  __STACK_END               
 000000a0  __STACK_SIZE              
 00004018  __TI_ISR_TRAP             
@@ -1902,28 +1906,28 @@ ffffffff  __TI_prof_data_size
 ffffffff  __TI_prof_data_start      
 ffffffff  __c_args__                
 00000001  __mpu_enable              
-00010296  __mpu_init                
-000102ee  __mspabi_divi             
-00010342  __mspabi_divu             
-000102ee  __mspabi_remi             
-00010342  __mspabi_remu             
+0001039c  __mpu_init                
+000103c8  __mspabi_divi             
+0001041c  __mspabi_divu             
+000103c8  __mspabi_remi             
+0001041c  __mspabi_remu             
 00004000  _c_int00_noinit_noargs_mpu
 0000fffe  _reset_vector             
 00002b60  _stack                    
-0001037e  _system_pre_init          
-00010378  abort                     
-00010210  delay                     
+00010458  _system_pre_init          
+00010452  abort                     
+000102e0  delay                     
 00004000  fram_ipe_end              
 00004000  fram_ipe_start            
 00004000  fram_rw_start             
 00004000  fram_rx_start             
-00010358  lcdBacklightON            
-000102c2  main                      
+00010432  lcdBacklightON            
+00010138  main                      
 0000a501  mpu_ctl0_value            
 00001513  mpu_sam_value             
 00000400  mpu_segment_border1       
 00000400  mpu_segment_border2       
-0001036a  strlen                    
+00010444  strlen                    
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -3482,27 +3486,29 @@ address   name
 0000fffc  __TI_int54                
 0000fffe  _reset_vector             
 00010000  LCD_inic                  
-000100cc  WriteASCII_B1             
-00010122  I2C_write_UCB1            
-00010174  LCD_aux                   
-000101c4  I2CConfig_UCB1            
-00010210  delay                     
-00010258  PCF_STT_STP               
-00010296  __mpu_init                
-000102c2  main                      
-000102ee  __mspabi_divi             
-000102ee  __mspabi_remi             
-0001031a  WriteString_B1            
-00010342  __mspabi_divu             
-00010342  __mspabi_remu             
-00010358  lcdBacklightON            
-0001036a  strlen                    
-00010378  C$$EXIT                   
-00010378  abort                     
-0001037e  _system_pre_init          
+000100cc  LCD_changeCursorPosition  
+00010138  main                      
+0001019c  WriteASCII_B1             
+000101f2  I2C_write_UCB1            
+00010244  LCD_aux                   
+00010294  I2CConfig_UCB1            
+000102e0  delay                     
+00010328  PCF_STT_STP               
+0001036e  LCD_clear                 
+0001039c  __mpu_init                
+000103c8  __mspabi_divi             
+000103c8  __mspabi_remi             
+000103f4  WriteString_B1            
+0001041c  __mspabi_divu             
+0001041c  __mspabi_remu             
+00010432  lcdBacklightON            
+00010444  strlen                    
+00010452  C$$EXIT                   
+00010452  abort                     
+00010458  _system_pre_init          
 ffffffff  __TI_pprof_out_hndl       
 ffffffff  __TI_prof_data_size       
 ffffffff  __TI_prof_data_start      
 ffffffff  __c_args__                
 
-[1574 symbols]
+[1576 symbols]
